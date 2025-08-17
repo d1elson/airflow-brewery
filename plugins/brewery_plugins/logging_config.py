@@ -10,7 +10,6 @@ class LoggingConfig:
     Returns:
         logging.Logger: The root logger instance configured with the specified settings.
     """
-
     def __init__(self, name=None, level=logging.INFO):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)

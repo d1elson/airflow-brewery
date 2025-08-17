@@ -1,6 +1,5 @@
 import os
 
-# from datetime import datetime
 from google.cloud import storage
 import json
 
@@ -11,7 +10,9 @@ class GcsBuckets:
     """
 
     def __init__(self):
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/opt/airflow/config/gcp_config.json"
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
+            "/opt/airflow/config/gcp_config.json"
+        )
         self.storage_client = storage.Client()
 
     def get_path_in_layer(
@@ -23,14 +24,16 @@ class GcsBuckets:
 
     def get_file_list_in_layer(self, bucket_name: str, layer_name: str) -> list:
         """
-        Retrieves a list of file paths from a specified layer within a Google Cloud Storage bucket.
+        Retrieves a list of file paths from a specified layer within a Google
+        Cloud Storage bucket.
 
         Args:
             bucket_name (str): The name of the GCS bucket to search in.
             layer_name (str): The name of the layer (prefix) to filter files.
 
         Returns:
-            list: A list of file paths in the format 'gs://{bucket_name}/{blob.name}' found within the specified layer.
+            list: A list of file paths in the format 'gs://{bucket_name}/{blob.name}'
+            found within the specified layer.
         """
         bucket = self.storage_client.bucket(bucket_name)
 
@@ -48,7 +51,8 @@ class GcsBuckets:
         file_name: str,
     ) -> None:
         """
-        Saves a JSON-serializable dictionary to a specified Google Cloud Storage (GCS) bucket.
+        Saves a JSON-serializable dictionary to a specified Google Cloud Storage
+        (GCS) bucket.
 
         Args:
             data (dict): The data to be saved as a JSON object.
@@ -60,7 +64,8 @@ class GcsBuckets:
             None
 
         Raises:
-            google.cloud.exceptions.GoogleCloudError: If there is an error uploading the file to GCS.
+            google.cloud.exceptions.GoogleCloudError: If there is an error
+            uploading the file to GCS.
         """
 
         blob_path = f"{layer_name}/{file_name}"

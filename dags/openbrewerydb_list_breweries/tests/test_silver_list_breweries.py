@@ -30,22 +30,20 @@ def silver():
 
 
 def _get_sample_data(silver):
-    """Reads and returns data from disk using the provided 'silver' object."""
+    """Reads sample brewery data from disk using the provided 'silver' task object."""
 
     data = silver._read_from_disk()
-    # data_rows = data.head(20)
-
-    # spark = silver.spark
-    # sample_data = spark.createDataFrame(data_rows)
 
     return data
 
 
 def test_no_nulls_in_key_columns(silver):
     """Checks that key columns do not have null values"""
+
     sample_data = _get_sample_data(silver)
 
     null_count = sample_data.filter(sample_data["id"].isNull()).count()
+
     assert null_count == 0, "Existem IDs nulos no DataFrame"
 
 

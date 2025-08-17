@@ -32,14 +32,15 @@ def test_aggregate_data(gold):
     """Tests the aggregation of data by country, state, and brewery type"""
 
     spark_config = SparkConfig('business_test')
-
     spark = spark_config.create_spark_session()
+
     data = [
         Row(id='1', country="Brazil", state="Acre", brewery_type="micro"),
         Row(id='2', country="Brazil", state="Acre", brewery_type="micro"),
         Row(id='3', country="Brazil", state="Pernambuco", brewery_type="brewpub"),
         Row(id='4', country="Canada", state="Ontario", brewery_type="regional"),
     ]
+
     df = spark.createDataFrame(data)
 
     df_aggregated = gold._groupby(df)

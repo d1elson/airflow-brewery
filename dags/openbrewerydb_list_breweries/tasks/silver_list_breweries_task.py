@@ -1,4 +1,3 @@
-from functools import reduce
 from datetime import datetime
 
 from pyspark.sql import DataFrame
@@ -25,9 +24,12 @@ class SilverListBreweriesTask:
         self.execution_date = datetime.today().strftime("%Y-%m-%d")
 
         self.bucket_name = "storage-open-brewery"
+
+        # GCS variables
         self.bronze_layer = "bronze"
         self.silver_layer = "silver"
 
+        # Disk variables
         self.bronze_storage = (
             f"/opt/airflow/.storage/{self.bucket_name}/{self.bronze_layer}"
         )
@@ -53,8 +55,6 @@ class SilverListBreweriesTask:
 
         self._save_on_disk(df_breweries)
         self._save_on_gcs(df_breweries)
-
-        # self._post_processing()
 
     def _read_from_disk(self) -> DataFrame:
         """Reads the raw data from the disk
@@ -125,8 +125,6 @@ class SilverListBreweriesTask:
 
         return df
 
-    # def _test_transform_columns(self, df: DataFrame) -> DataFrame:
-
     def _save_on_disk(self, df: DataFrame) -> None:
         """Saves the transformed data to a local disk file
 
@@ -145,15 +143,8 @@ class SilverListBreweriesTask:
             df (DataFrame): The transformed data to be saved
         """
         blob_path = self.gcs_buckets.get_path_in_layer(
-            self.bucket_name, self.silver_layer, 'breweries_per_location'
+            self.bucket_name, self.silver_layer, "breweries_per_location"
         )
 
         self.log.info(f"Saving data to GCS: {blob_path}")
         df.write.mode("overwrite").partitionBy("country", "state").parquet(blob_path)
-
-    def _post_processing(self) -> None:
-        """Post processing step to be executed after the transformation"""
-
-        self.spark.stop()
-
-        self.log.info("Transform task completed successfully")

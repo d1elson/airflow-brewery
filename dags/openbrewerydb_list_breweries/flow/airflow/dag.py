@@ -34,7 +34,10 @@ with DAG(
     start_date=datetime(2025, 8, 15),
     max_active_runs=1,
     description="ETL from the openbrewerydb API data to analysis-ready data",
-    tags=[f"Source: {Pipeline.SOURCE}"],
+    tags=[
+        f"Source: {Pipeline.SOURCE}",
+        f"Endpoint: {Pipeline.ENDPOINT}"
+    ],
     schedule="@daily",
     catchup=False,
 ) as dag:

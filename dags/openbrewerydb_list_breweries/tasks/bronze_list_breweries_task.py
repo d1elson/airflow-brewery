@@ -24,7 +24,11 @@ class BronzeListBreweriesTask:
         self.execution_date = datetime.today().strftime("%Y-%m-%d")
 
         self.bucket_name = "storage-open-brewery"
+
+        # GCS variables
         self.bronze_layer = "bronze"
+
+        # Disk variables
         self.bronze_storage = (
             f"/opt/airflow/.storage/{self.bucket_name}/{self.bronze_layer}"
         )

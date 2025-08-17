@@ -1,4 +1,3 @@
-from functools import reduce
 from datetime import datetime
 
 from pyspark.sql.functions import count
@@ -22,11 +21,18 @@ class GoldListBreweriesTask:
         self.execution_date = datetime.today().strftime("%Y-%m-%d")
 
         self.bucket_name = "storage-open-brewery"
+
+        # GCS variables
         self.silver_layer = "silver"
         self.gold_layer = "gold"
 
-        self.silver_storage = f"/opt/airflow/.storage/{self.bucket_name}/{self.silver_layer}"
-        self.gold_storage = f"/opt/airflow/.storage/{self.bucket_name}/{self.gold_layer}"
+        # Disk variables
+        self.silver_storage = (
+            f"/opt/airflow/.storage/{self.bucket_name}/{self.silver_layer}"
+        )
+        self.gold_storage = (
+            f"/opt/airflow/.storage/{self.bucket_name}/{self.gold_layer}"
+        )
 
         # Initialize Spark session
         spark_config = SparkConfig("gold_list_breweries_task")
@@ -42,8 +48,6 @@ class GoldListBreweriesTask:
 
         self._save_on_disk(df_breweries_per_location_type)
         self._save_on_gcs(df_breweries_per_location_type)
-
-        # self._post_processing()
 
     def _read_from_disk(self) -> DataFrame:
         """Reads the silver data from the disk
@@ -115,16 +119,9 @@ class GoldListBreweriesTask:
             df (DataFrame): The transformed data to be saved
         """
         blob_path = self.gcs_buckets.get_path_in_layer(
-            self.bucket_name, self.gold_layer, 'breweries_per_type_location'
+            self.bucket_name, self.gold_layer, "breweries_per_type_location"
         )
 
         self.log.info(f"Saving data to GCS: {blob_path}")
 
         df.write.mode("overwrite").parquet(blob_path)
-
-    def _post_processing(self) -> None:
-        """Post processing step to be executed after the transformation"""
-
-        self.spark.stop()
-
-        self.log.info("Transform task completed successfully")
