@@ -56,7 +56,7 @@ A Swarm-compatible compose file is also provided for production deployment.
 Airflow Webserver is used to monitor DAG runs, task statuses, and errors.
 Additionally, email alerts are triggered in case of failures.
 
-![Email Failure](openbrewery/resources/email_failure.png)
+![Email Failure](dags/openbrewerydb_list_breweries/resources/email_failure.png)
 
 **Repository**:
 GitHub is used for version control.
@@ -81,7 +81,7 @@ Its main purpose is to extract brewery information worldwide, catalog them by lo
 
 ## DAG Structure
 
-![DAG View](openbrewery/resources/dag_view.png)
+![DAG View](dags/openbrewerydb_list_breweries/resources/dag_view.png)
 
 
 **Item**       | **Description**
