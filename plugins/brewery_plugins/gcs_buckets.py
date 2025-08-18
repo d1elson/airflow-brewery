@@ -11,7 +11,7 @@ class GcsBuckets:
 
     def __init__(self):
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
-            "/opt/airflow/config/gcp_config.json"
+            "/opt/airflow/config/gcs_config.json"
         )
         self.storage_client = storage.Client()
 

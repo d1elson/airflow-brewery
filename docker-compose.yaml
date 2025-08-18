@@ -67,7 +67,7 @@ x-airflow-common:
     AIRFLOW__SMTP__SMTP_MAIL_FROM: ${SMTP_SENDER_EMAIL}
     # AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}
     PIPELINE_ORQUESTRATOR: airflow
-    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/config/gcp_config.json
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/config/gcs_config.json
   volumes:
     - ./config:/opt/airflow/config
     - ./dags:/opt/airflow/dags
