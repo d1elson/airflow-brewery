@@ -36,6 +36,9 @@ Consume data from an API, transform it, and persist it into a data lake followin
 
 **Orchestration**:
 Airflow is used for orchestration, with email alerts in case of failures. Unit tests have been added and will be extended further.
+Airflow Credentials:
+- Username: airflow
+- Password: airflow
 
 **Language**:
 The project is written in Python, using **PySpark** for data processing.
@@ -51,6 +54,8 @@ A Swarm-compatible compose file is also provided for production deployment.
 - Bronze: raw source data
 - Silver: tabulated curated data
 - Gold: business-level transformations
+
+![Architecture](dags/openbrewerydb_list_breweries/resources/gcs_achitecture.png)
 
 **Monitoring**:
 Airflow Webserver is used to monitor DAG runs, task statuses, and errors.
@@ -110,3 +115,6 @@ For full execution in production, the following files are required but were omit
 
 - Unit tests are located outside the main pipeline.
 - Although the initial recommendation was to run unit tests before persisting data, this design was reconsidered as it is not a best practice.
+- You need to give rw permission to the .storage folder:
+    - sudo chown -R 1000:root .
+    - sudo chmod -R g+rw .
