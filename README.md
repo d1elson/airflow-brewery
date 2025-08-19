@@ -55,7 +55,7 @@ A Swarm-compatible compose file is also provided for production deployment.
 - Silver: tabulated curated data
 - Gold: business-level transformations
 
-![Architecture](dags/openbrewerydb_list_breweries/resources/gcs_achitecture.png)
+![Architecture](dags/openbrewerydb_list_breweries/resources/gcs_architecture.png)
 
 **Monitoring**:
 Airflow Webserver is used to monitor DAG runs, task statuses, and errors.
