@@ -97,8 +97,6 @@ class GoldListBreweriesTask:
             count("id").alias("brewery_count")
         )
 
-        df_groupby.show(truncate=False)  # remove show for release
-
         return df_groupby
 
     def _save_on_disk(self, df: DataFrame) -> None:
